@@ -189,9 +189,9 @@ export const signup = asyncHandler(async (req, res, next) => {
 `; // Your email template remains unchanged
 
   // Send confirmation email
-  if (!(await sendEmail({ to: email, subject: "Confirmation-Email", html }))) {
-    return res.status(400).json({ message: "Email rejected" });
-  }
+  // if (!(await sendEmail({ to: email, subject: "Confirmation-Email", html }))) {
+  //   return res.status(400).json({ message: "Email rejected" });
+  // }
   // Hash password
   const hashPassword = await hash({ plaintext: password });
 
