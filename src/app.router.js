@@ -11,7 +11,7 @@ const initApp = (app, express) => {
   app.use(express.json({}));
   app.use(cors());
   app.get("/", (req, res, next) => {
-    return res.status(200).send("Welcome in my E-commerce project");
+    return res.status(200).send("Welcome in my bookStore project");
   });
   app.use("/cart", cartPage);
   app.use("/auth", authPage);
