@@ -13,7 +13,7 @@ const initApp = (app, express) => {
   app.get("/", (req, res, next) => {
     return res.status(200).send("Welcome in my bookStore project");
   });
-  app.use("/cart", cartPage);
+  // app.use("/cart", cartPage);
   app.use("/auth", authPage);
   app.use("/book", bookPage);
   app.use("/order", orderPage);
