@@ -1,5 +1,5 @@
 import { asyncHandler } from "../../../utils/errorHandling.js";
-import BookModel from "../../../../DB/modules/BookModel.js";
+import BookModel from "../../../../DB/modules/bookModel.js";
 import orderModel from "../../../../DB/modules/OrderModel.js";
 import payment from "../../../utils/payment.js";
 import cartModel from "../../../../DB/modules/cartModel.js";

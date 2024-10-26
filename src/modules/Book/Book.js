@@ -1,5 +1,4 @@
 import bookModel from "../../../DB/modules/bookModel.js";
-import BookModel from "../../../DB/modules/bookModel.js";
 import { categoryModel } from "../../../DB/modules/categoryModel.js"; // Assuming you're using this model for categories
 import cloudinary from "../../utils/cloudinary.js"; // Make sure you have cloudinary configured
 import { asyncHandler } from "../../utils/errorHandling.js";
@@ -7,7 +6,7 @@ import { asyncHandler } from "../../utils/errorHandling.js";
 // Get a book from the database
 export const getBook = asyncHandler(async (req, res, next) => {
   try {
-    const checkBook = await BookModel.find({});
+    const checkBook = await bookModel.find({});
     if (!checkBook) {
       return res.status(404).json({ message: "Book not found" });
     }
@@ -88,7 +87,7 @@ export const addBook = asyncHandler(async (req, res, next) => {
     }
 
     // Create new book
-    const newBook = await BookModel.create({
+    const newBook = await bookModel.create({
       bookTitle,
       author,
       description,
@@ -159,7 +158,7 @@ export const updateBook = asyncHandler(async (req, res) => {
     // }
     if (req.file) {
       // Create new book
-      const newBook = await BookModel.findByIdAndUpdate(
+      const newBook = await bookModel.findByIdAndUpdate(
         { _id: req.params.id },
         {
           bookTitle,
@@ -180,7 +179,7 @@ export const updateBook = asyncHandler(async (req, res) => {
       // Create new book
       console.log(req.params.id);
 
-      const newBook = await BookModel.findByIdAndUpdate(
+      const newBook = await bookModel.findByIdAndUpdate(
         { _id: req.params.id },
         {
           bookTitle,
@@ -206,7 +205,7 @@ export const deleteBook = asyncHandler(async (req, res) => {
   try {
     console.log(req.params.id);
 
-    const book = await BookModel.findByIdAndDelete(req.params.id);
+    const book = await bookModel.findByIdAndDelete(req.params.id);
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
