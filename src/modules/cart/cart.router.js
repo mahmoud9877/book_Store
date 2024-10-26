@@ -1,8 +1,8 @@
 import { Router } from "express";
-import * as validators from "../cart/cart.validation.js";
+// import * as validators from "../cart/cart.validation.js";
 import * as cartController from "../cart/cart.js";
-import { endpoint } from "./cart.endPoint.js";
-import { validation } from "../../middleware/validation.js";
+import endpoint  from "./cart.endPoint.js";
+// import { validation } from "../../middleware/validation.js";
 import { auth } from "../../middleware/auth.js";
 const router = Router();
 

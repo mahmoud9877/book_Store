@@ -9,7 +9,6 @@ import { customAlphabet } from "nanoid";
 import sendEmail from "../../../src/utils/email.js";
 import cloudinary from "../../utils/cloudinary.js";
 
-
 export const signup = asyncHandler(async (req, res, next) => {
   const { userName, email, password, phone, image } = req.body;
 
