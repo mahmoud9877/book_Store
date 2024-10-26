@@ -1,7 +1,7 @@
 export const asyncHandler = (fn) => {
   return (req, res, next) => {
     fn(req, res, next).catch((err) => {
-      return next(new Error( {error : err}, { cause: 500 }));
+      return next(new Error(err, { cause: 500 }));
     });
   };
 };
@@ -13,6 +13,6 @@ export const globalErrorHandling = (err, req, res, next) => {
         .status(err.cause || 500)
         .json({ message: err.message, err, stack: err.stack });
     }
-    return res.status(err.cause || 500).json({ message: err });
+    return res.status(err.cause || 500).json({ message: err.message, stack: err.stack });
   }
 };
