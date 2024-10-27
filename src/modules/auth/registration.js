@@ -1,12 +1,7 @@
 import userModel from "../../../DB/modules/UserModel.js";
 import { asyncHandler } from "../../../src/utils/errorHandling.js";
-import {
-  generateToken,
-  verifyToken,
-} from "../../../src/utils/GenerateAndVerifyToken.js";
+import { generateToken } from "../../../src/utils/GenerateAndVerifyToken.js";
 import { hash, compare } from "../../../src/utils/HashAndCompare.js";
-import { customAlphabet } from "nanoid";
-import sendEmail from "../../../src/utils/email.js";
 import cloudinary from "../../utils/cloudinary.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
