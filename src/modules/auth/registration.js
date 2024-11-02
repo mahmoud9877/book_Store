@@ -207,7 +207,7 @@ export const login = asyncHandler(async (req, res, next) => {
 
   // Generate the token including the user role
   const token = generateToken({
-    payload: { id: user._id, userName: user.userName, role: user.role }, // Include user role here
+    payload: { id: user._id, userName: user.userName, role: user.role }, // Include role here
     expiresIn: 30 * 60 * 24 * 365,
   });
 
