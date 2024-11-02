@@ -1,7 +1,7 @@
-import bookModel from "../../../DB/modules/bookModel.js";
-import { categoryModel } from "../../../DB/modules/categoryModel.js"; // Assuming you're using this model for categories
-import cloudinary from "../../utils/cloudinary.js"; // Make sure you have cloudinary configured
+import cloudinary from "../../utils/cloudinary.js";
+import bookModel from "../../../DB/modules/bookModel.js"; // Make sure you have cloudinary configured
 import { asyncHandler } from "../../utils/errorHandling.js";
+import { categoryModel } from "../../../DB/modules/categoryModel.js"; // Assuming you're using this model for categories
 
 // Get a book from the database
 export const getBook = asyncHandler(async (req, res, next) => {
@@ -34,15 +34,6 @@ export const addBook = asyncHandler(async (req, res, next) => {
   try {
     const { bookTitle, author, description, price, category, quantity } =
       req.body;
-
-    console.log({
-      bookTitle,
-      author,
-      description,
-      price,
-      category,
-      quantity,
-    });
 
     // Check for required fields
     if (
@@ -93,7 +84,7 @@ export const addBook = asyncHandler(async (req, res, next) => {
       description,
       image: secure_url, // Save the image URL
       price,
-      category: category, // Use the category name
+      category, // Use the category ID
       quantity,
     });
 
@@ -102,6 +93,7 @@ export const addBook = asyncHandler(async (req, res, next) => {
       book: newBook,
     });
   } catch (error) {
+    console.error(error); // Log the error for debugging
     next(error);
   }
 });

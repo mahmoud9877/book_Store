@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { fileUpload, fileValidation } from "../../utils/multer.js"; // Ensure your file upload utility is imported
 import * as BookController from "./Book.js"; // Ensure this imports the necessary methods
-import * as validators from "./BookValidation.js";
-import { auth } from "../../middleware/auth.js";
-import { validation } from "../../middleware/validation.js";
 import { endpoint } from "./Book.endpoint.js";
+import { auth } from "../../middleware/auth.js";
+import { fileUpload, fileValidation } from "../../utils/multer.js"; // Ensure your file upload utility is imported
 const router = Router();
 
 // GET route to fetch all books

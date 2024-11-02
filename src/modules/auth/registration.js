@@ -2,10 +2,9 @@ import userModel from "../../../DB/modules/UserModel.js";
 import { asyncHandler } from "../../../src/utils/errorHandling.js";
 import { generateToken } from "../../../src/utils/GenerateAndVerifyToken.js";
 import { hash, compare } from "../../../src/utils/HashAndCompare.js";
-import cloudinary from "../../utils/cloudinary.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
-  const { userName, email, password, phone, image } = req.body;
+  const { userName, email, password, phone } = req.body;
 
   // Check if email already exists
   if (await userModel.findOne({ email: email.toLowerCase() })) {
@@ -17,18 +16,7 @@ export const signup = asyncHandler(async (req, res, next) => {
     return next(new Error("Phone number already exists", { cause: 409 }));
   }
 
-  // Handle image upload if provided
-  let imageUrl;
-  if (image) {
-    try {
-      const uploadResponse = await cloudinary.v2.uploader.upload(image, {
-        folder: "userImages", // Optional: you can specify a folder in Cloudinary
-      });
-      imageUrl = uploadResponse.secure_url;
-    } catch (err) {
-      return next(new Error("Image upload failed", { cause: 500 }));
-    }
-  }
+
 
   const token = generateToken({
     payload: { email },
@@ -187,6 +175,7 @@ export const signup = asyncHandler(async (req, res, next) => {
   // if (!(await sendEmail({ to: email, subject: "Confirmation-Email", html }))) {
   //   return res.status(400).json({ message: "Email rejected" });
   // }
+  
   // Hash password
   const hashPassword = await hash({ plaintext: password });
 
@@ -196,7 +185,6 @@ export const signup = asyncHandler(async (req, res, next) => {
     email,
     password: hashPassword,
     phone, // Add phone to the user model
-    image: imageUrl, // Store the image URL if uploaded
   });
 
   // Respond with success

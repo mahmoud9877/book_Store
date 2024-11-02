@@ -1,6 +1,6 @@
-import { asyncHandler } from "../../utils/errorHandling.js";
 import bookModel from "../../../DB/modules/bookModel.js";
 import cartModel from "../../../DB/modules/cartModel.js";
+import { asyncHandler } from "../../utils/errorHandling.js";
 
 // Add to cart handler
 export const getCart = asyncHandler(async (req, res, next) => {
@@ -19,9 +19,6 @@ export const getCart = asyncHandler(async (req, res, next) => {
 
 export const addToCart = asyncHandler(async (req, res, next) => {
   const { bookId, quantity } = req.body;
-
-  console.log("Request Body:", req.body);
-  console.log("bookId:", bookId);
 
   // Validate that bookId and quantity are provided and valid
   if (!bookId || quantity == null || quantity <= 0) {

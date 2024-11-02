@@ -1,11 +1,11 @@
+import cors from "cors";
 import connectDB from "../DB/connection.js";
+import bookPage from "../src/modules/Book/BookRouter.js";
 import authPage from "../src/modules/auth/auth.router.js";
 import cartPage from "../src/modules/cart/cart.router.js";
-import bookPage from "../src/modules/Book/BookRouter.js";
 import orderPage from "../src/modules/order/order.router.js";
-import categoryPage from "../src/modules/Category/category.router.js";
 import { globalErrorHandling } from "./utils/errorHandling.js";
-import cors from "cors";
+import categoryPage from "../src/modules/Category/category.router.js";
 
 const initApp = (app, express) => {
   app.use(express.json({}));
