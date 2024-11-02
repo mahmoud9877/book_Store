@@ -16,8 +16,6 @@ export const signup = asyncHandler(async (req, res, next) => {
     return next(new Error("Phone number already exists", { cause: 409 }));
   }
 
-
-
   const token = generateToken({
     payload: { email },
     signature: process.env.EMAIL_TOKEN,
@@ -175,7 +173,7 @@ export const signup = asyncHandler(async (req, res, next) => {
   // if (!(await sendEmail({ to: email, subject: "Confirmation-Email", html }))) {
   //   return res.status(400).json({ message: "Email rejected" });
   // }
-  
+
   // Hash password
   const hashPassword = await hash({ plaintext: password });
 
@@ -194,6 +192,7 @@ export const signup = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await userModel.findOne({ email: email.toLowerCase() });
+
   if (!user) {
     return next(new Error("Email Not found", { cause: 404 }));
   }
@@ -201,15 +200,21 @@ export const login = asyncHandler(async (req, res, next) => {
   if (!user.confirmEmail) {
     return next(new Error("Confirm Your Email", { cause: 404 }));
   }
+
   if (!compare({ plaintext: password, hashValue: user.password })) {
     return next({ message: "Wrong Password", cause: 404 });
   }
 
+  // Generate the token including the user role
   const token = generateToken({
-    payload: { id: user._id, userName: user.userName },
+    payload: { id: user._id, userName: user.userName, role: user.role }, // Include user role here
     expiresIn: 30 * 60 * 24 * 365,
   });
+
   user.status = "online";
-  user.save();
-  return res.status(201).json({ message: "Done", token });
+  await user.save(); // Ensure you await user.save() to handle the promise
+
+  return res
+    .status(200)
+    .json({ message: "Login successful", token, role: user.role }); // Return user role in response
 });
