@@ -213,7 +213,6 @@ export const login = asyncHandler(async (req, res, next) => {
 
   user.status = "online";
   await user.save(); // Ensure you await user.save() to handle the promise
-
   return res
     .status(200)
     .json({ message: "Login successful", token, role: user.role }); // Return user role in response
