@@ -11,7 +11,6 @@ export const signup = asyncHandler(async (req, res, next) => {
   if (await userModel.findOne({ email: email.toLowerCase() })) {
     return next(new Error("Email already exists", { cause: 409 }));
   }
-
   const token = generateToken({
     payload: { email },
     signature: process.env.EMAIL_TOKEN,
