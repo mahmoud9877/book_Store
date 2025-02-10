@@ -9,13 +9,18 @@ export const getAll = asyncHandler(async (req, res, next) => {
 });
 
 export const signup = asyncHandler(async (req, res, next) => {
-  const { userName, email, password } = req.body;
-  console.log({ userName, email, password });
+  const { userName, email, password, phone } = req.body;
 
   // Check if email already exists
   if (await userModel.findOne({ email: email.toLowerCase() })) {
     return next(new Error("Email already exists", { cause: 409 }));
   }
+
+  // Check if phone number already exists
+  if (await userModel.findOne({ phone })) {
+    return next(new Error("Phone number already exists", { cause: 409 }));
+  }
+
   const token = generateToken({
     payload: { email },
     signature: process.env.EMAIL_TOKEN,
@@ -182,6 +187,7 @@ export const signup = asyncHandler(async (req, res, next) => {
     userName,
     email,
     password: hashPassword,
+    phone, // Add phone to the user model
   });
 
   // Respond with success
