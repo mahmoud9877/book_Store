@@ -8,4 +8,4 @@ dotenv.config({ path: path.join(__dirname, "./config/.env") });
 const app = express();
 const port = process.env.PORT || 3000;
 initApp(app, express);
-app.listen(port, () => console.log(`server is running`));
+app.listen(port, () => console.log(`server is running............${port}`));
