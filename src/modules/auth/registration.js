@@ -177,7 +177,6 @@ export const signup = asyncHandler(async (req, res, next) => {
     userName,
     email,
     password: hashPassword,
-    phone, // Add phone to the user model
   });
 
   // Respond with success
