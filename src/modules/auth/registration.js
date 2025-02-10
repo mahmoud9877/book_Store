@@ -3,6 +3,11 @@ import { asyncHandler } from "../../../src/utils/errorHandling.js";
 import { generateToken } from "../../../src/utils/GenerateAndVerifyToken.js";
 import { hash, compare } from "../../../src/utils/HashAndCompare.js";
 
+export const getAll = asyncHandler(async (req, res, next) => {
+  const check = await userModel.findOne({});
+  return res.json({ message: "done", check });
+});
+
 export const signup = asyncHandler(async (req, res, next) => {
   const { userName, email, password } = req.body;
   console.log({ userName, email, password });
