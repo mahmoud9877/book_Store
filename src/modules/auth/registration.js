@@ -5,6 +5,7 @@ import { hash, compare } from "../../../src/utils/HashAndCompare.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
   const { userName, email, password } = req.body;
+  console.log({ userName, email, password });
 
   // Check if email already exists
   if (await userModel.findOne({ email: email.toLowerCase() })) {
