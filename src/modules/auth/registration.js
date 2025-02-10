@@ -4,16 +4,11 @@ import { generateToken } from "../../../src/utils/GenerateAndVerifyToken.js";
 import { hash, compare } from "../../../src/utils/HashAndCompare.js";
 
 export const signup = asyncHandler(async (req, res, next) => {
-  const { userName, email, password, phone } = req.body;
+  const { userName, email, password } = req.body;
 
   // Check if email already exists
   if (await userModel.findOne({ email: email.toLowerCase() })) {
     return next(new Error("Email already exists", { cause: 409 }));
-  }
-
-  // Check if phone number already exists
-  if (await userModel.findOne({ phone })) {
-    return next(new Error("Phone number already exists", { cause: 409 }));
   }
 
   const token = generateToken({
