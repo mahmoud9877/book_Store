@@ -20,7 +20,7 @@ export const getBookDetails = asyncHandler(async (req, res, next) => {
   const { bookId } = req.params; // Assuming the book ID is passed in the URL
 
   // Find the book by its ID
-  const book = await bookModel.findById({ _id: req.params.id });
+  const book = await bookModel.findById({ bookId });
 
   if (!book) {
     return res.status(404).json({ message: "Book not found" });

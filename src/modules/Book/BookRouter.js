@@ -16,7 +16,7 @@ router.post(
   BookController.addBook
 );
 
-router.get("/:id", BookController.getBookDetails);
+router.get("/:bookId", BookController.getBookDetails);
 
 router.delete(
   "/delete/:id",
