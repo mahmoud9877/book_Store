@@ -28,13 +28,13 @@ export const getCategoryById = asyncHandler(async (req, res) => {
 // Create a new category
 export const createCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;
-  if (!CATEGORY_OPTIONS.includes(name)) {
-    return res.status(400).json({
-      error: `Invalid category name. Choose from: ${CATEGORY_OPTIONS.join(
-        ", "
-      )}`,
-    });
-  }
+  // if (!CATEGORY_OPTIONS.includes(name)) {
+  //   return res.status(400).json({
+  //     error: `Invalid category name. Choose from: ${CATEGORY_OPTIONS.join(
+  //       ", "
+  //     )}`,
+  //   });
+  // }
   const category = new categoryModel({ name });
   await category.save();
   res.status(201).json({ message: "Category created successfully", category });

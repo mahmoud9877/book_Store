@@ -16,6 +16,12 @@ router.post(
   BookController.addBook
 );
 
+router.patch(
+  "/:bookId/like",
+  // auth(endpoint.likeBookOrDisLike),
+  BookController.likeBookOrDisLike
+);
+
 router.get("/:bookId", BookController.getBookDetails);
 
 router.delete(

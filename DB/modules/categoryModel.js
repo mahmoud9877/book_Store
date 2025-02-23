@@ -13,7 +13,6 @@ const categorySchema = new Schema(
     name: {
       type: String,
       required: true,
-      enum: CATEGORY_OPTIONS,
       unique: true,
       trim: true,
       lowercase: true,

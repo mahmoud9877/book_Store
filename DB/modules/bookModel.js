@@ -26,11 +26,7 @@ const bookSchema = new Schema(
       type: Number,
       required: [true, "Price is required"],
     },
-    role: {
-      type: String,
-      default: "Admin",
-      enum: ["User", "Admin"],
-    },
+
     quantity: {
       type: Number,
       required: true,
@@ -38,6 +34,7 @@ const bookSchema = new Schema(
     category: {
       type: String, // Changed from ObjectId to String to store category name directly
       required: [true, "Category name is required"],
+      enum: ["fantasy", "kids"],
     },
     changePasswordTime: Date,
   },

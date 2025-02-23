@@ -20,7 +20,7 @@ export const getBookDetails = asyncHandler(async (req, res, next) => {
   const { bookId } = req.params; // Assuming the book ID is passed in the URL
 
   // Find the book by its ID
-  const book = await bookModel.findById({ bookId });
+  const book = await bookModel.findById(bookId);
 
   if (!book) {
     return res.status(404).json({ message: "Book not found" });
@@ -205,4 +205,15 @@ export const deleteBook = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error deleting book", error });
   }
+});
+
+export const likeBookOrDisLike = asyncHandler(async (req, res) => {
+  const { bookId } = req.params;
+  const { userId } = req.body;
+  const likeBook = await bookModel.findOneAndUpdate(
+    { userId: bookId, like: { $ne: userId } },
+    { $push: { like: userId } },
+    { new: true }
+  );
+  return res.json({ message: "Done", likeBook });
 });
