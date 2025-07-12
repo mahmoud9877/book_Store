@@ -36,9 +36,9 @@ export const auth = (accessRoles = []) => {
     if (!user) {
       return next(new Error("Not registered account", { cause: 401 }));
     }
-    if (!accessRoles?.includes(user.role)) {
-      return next(new Error("Not authorized account", { cause: 401 }));
-    }
+    // if (!accessRoles?.includes(user.role)) {
+    //   return next(new Error("Not authorized account", { cause: 401 }));
+    // }
 
     // Attach user to the request object
     req.user = user;
