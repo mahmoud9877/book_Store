@@ -8,7 +8,7 @@ const router = Router();
 // Assuming auth middleware adds the authenticated user's info to req.user
 router.get(
   "/",
-  auth(endpoint.addToCart),
+  auth(),
   cartController.getCart // Controller to handle the cart retrieval
 );
 
