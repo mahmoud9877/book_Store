@@ -4,7 +4,7 @@ import { generateToken } from "../../../src/utils/GenerateAndVerifyToken.js";
 import { hash, compare } from "../../../src/utils/HashAndCompare.js";
 
 export const getAll = asyncHandler(async (req, res, next) => {
-  const check = await userModel.findOne({});
+  const check = await userModel.find();
   return res.json({ message: "done", check });
 });
 

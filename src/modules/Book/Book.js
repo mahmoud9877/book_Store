@@ -18,7 +18,6 @@ export const getBook = asyncHandler(async (req, res, next) => {
 
 export const getBookDetails = asyncHandler(async (req, res, next) => {
   const { bookId } = req.params; // Assuming the book ID is passed in the URL
-
   // Find the book by its ID
   const book = await bookModel.findById(bookId);
 
@@ -196,7 +195,6 @@ export const updateBook = asyncHandler(async (req, res) => {
 export const deleteBook = asyncHandler(async (req, res) => {
   try {
     console.log(req.params.id);
-
     const book = await bookModel.findByIdAndDelete(req.params.id);
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
@@ -207,13 +205,45 @@ export const deleteBook = asyncHandler(async (req, res) => {
   }
 });
 
-export const likeBookOrDisLike = asyncHandler(async (req, res) => {
+export const likeBook = asyncHandler(async (req, res) => {
   const { bookId } = req.params;
-  const { userId } = req.body;
+  const userId = req.user.userId; // تأكيد أن userId يأتي من المصادقة
+
+  console.log({ bookId, userId });
+
+  // العثور على الكتاب وتحديث الإعجابات
   const likeBook = await bookModel.findOneAndUpdate(
-    { userId: bookId, like: { $ne: userId } },
-    { $push: { like: userId } },
-    { new: true }
+    { _id: bookId, likes: { $ne: userId } }, // التأكد أن المستخدم لم يعجب بالكتاب من قبل
+    {
+      $push: { likes: userId }, // إضافة userId إلى مصفوفة الإعجابات
+      $inc: { totalLikes: 1 }, // زيادة عدد الإعجابات
+    },
+    { new: true } // إرجاع المستند بعد التعديل
   );
-  return res.json({ message: "Done", likeBook });
+
+  // التحقق مما إذا كان الكتاب غير موجود أو أن المستخدم قام بالإعجاب مسبقًا
+  if (!likeBook) {
+    return res.status(400).json({ message: "Book not found or already liked" });
+  }
+
+  return res.json({ message: "Book liked successfully", likeBook });
+});
+
+export const unLikeBook = asyncHandler(async (req, res) => {
+  const { bookId } = req.params;
+  const { userId } = req.body; // Ensure userId is coming from authentication
+
+  // Find and update the book
+  const unLikeBook = await bookModel.findOneAndUpdate(
+    { _id: bookId, like: userId }, // Ensure user has liked the book
+    { $pull: { like: userId } }, // Remove userId from the like array
+    { new: true } // Return updated document
+  );
+
+  // If the book wasn't found or the user hasn't liked it
+  if (!unLikeBook) {
+    return res.status(400).json({ message: "Book not found or not liked yet" });
+  }
+
+  return res.json({ message: "Book unliked successfully", unLikeBook });
 });

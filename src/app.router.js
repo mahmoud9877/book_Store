@@ -8,6 +8,7 @@ import { globalErrorHandling } from "./utils/errorHandling.js";
 import categoryPage from "../src/modules/Category/category.router.js";
 
 const initApp = (app, express) => {
+  connectDB();
   app.use(express.json({}));
   app.use(cors());
   app.get("/", (req, res, next) => {
@@ -22,7 +23,6 @@ const initApp = (app, express) => {
     res.send("In-valid Routing Plz check url or method");
   });
   app.use(globalErrorHandling);
-  connectDB();
 };
 
 export default initApp;

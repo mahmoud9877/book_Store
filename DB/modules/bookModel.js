@@ -31,10 +31,13 @@ const bookSchema = new Schema(
       type: Number,
       required: true,
     },
+    totalLikes: {
+      type: Number,
+      default: 0,
+    },
     category: {
       type: String, // Changed from ObjectId to String to store category name directly
       required: [true, "Category name is required"],
-      enum: ["fantasy", "kids"],
     },
     changePasswordTime: Date,
   },
